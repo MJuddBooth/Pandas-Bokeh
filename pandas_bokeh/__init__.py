@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+
 from .base import output_notebook, output_file, plot_grid, show, embedded_html
 from .plot import plot, FramePlotMethods
 from .geoplot import geoplot
@@ -39,25 +44,33 @@ if pd.__version__ >= "0.25":
     pd.DataFrame.plot._dataframe_kinds = ("map", "scatter")
 
     # Define additional plotting APIs (not default in pandas.core.plotting defined)
+    def wrapper(kind):
+        def f(self, **kwargs):
+            return self(kind=kind, **kwargs)
+        f.__doc__ = getattr(FramePlotMethods, kind).__doc__
+
     def mapplot(self, **kwargs):
         return self(kind="map", **kwargs)
-    pd.DataFrame.plot.map = mapplot
+ #   pd.DataFrame.plot.map = mapplot
+    pd.DataFrame.plot.map = wrapper(kind="map")
 
     def pointplot(self, **kwargs):
         return self(kind="point", **kwargs)
-    pd.DataFrame.plot.point = pointplot
+#    pd.DataFrame.plot.point = pointplot
+    pd.DataFrame.plot.point = wrapper(kind="point")
 
     def stepplot(self, **kwargs):
         return self(kind="step", **kwargs)
-    pd.DataFrame.plot.step = stepplot
+#    pd.DataFrame.plot.step = stepplot
+    pd.DataFrame.plot.step = wrapper(kind="step")
 
-    for kind in ["map", "point", "step"]:
-        getattr(pd.DataFrame.plot, kind).__doc__ = getattr(FramePlotMethods, kind).__doc__
+#    for kind in ["map", "point", "step"]:
+#        getattr(pd.DataFrame.plot, kind).__doc__ = getattr(FramePlotMethods, kind).__doc__
 
     # Define API methods on pandas.plotting:
     pd.plotting.output_notebook = output_notebook
     pd.plotting.output_file = output_file
-    pd.plotting.plot_grid = plot_grid 
+    pd.plotting.plot_grid = plot_grid
     pd.plotting.show = show
     pd.plotting.embedded_html = embedded_html
     pd.plotting.column = column

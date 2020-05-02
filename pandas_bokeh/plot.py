@@ -1,6 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import division
+from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import absolute_import
+from builtins import dict
+from builtins import zip
+from builtins import int
+from builtins import range
+from builtins import str
+
 import datetime
 import math
 import numbers
@@ -169,18 +179,18 @@ def plot(
     --------
     >>> df.plot_bokeh.line()
     >>> df.plot_bokeh.scatter(x='x',y='y')
-    
+
     These plotting methods can also be accessed by calling the accessor as a
     method with the ``kind`` argument (except of "map" plot):
     ``df.plot_bokeh(kind='line')`` is equivalent to ``df.plot_bokeh.line()``
 
     For more information about the individual plot kind implementations, have a
     look at the underlying method accessors (like df.plot_bokeh.line) or visit
-    https://github.com/PatrikHlobil/Pandas-Bokeh. 
+    https://github.com/PatrikHlobil/Pandas-Bokeh.
 
     If `sizing_mode` is not fixed (default), it will overide the set plot width or height
     depending on which axis it is scaled on.
-    
+
     """
 
     # Make a local copy of the DataFrame:
@@ -551,7 +561,7 @@ def plot(
             if add_param in kwargs:
                 del kwargs[add_param]
 
-        
+
 
         # Get values for categorical colormap:
         category_values = None
@@ -931,7 +941,7 @@ def plot(
     # If rangetool is used, add it to layout:
     if p_rangetool is not None:
         p = column(p, p_rangetool)
-        
+
     # Display plot if wanted
     if show_figure:
         show(p)
@@ -1009,7 +1019,7 @@ def _base_lineplot(
                 my_hover.tooltips = hovertool_string
             p.add_tools(my_hover)
 
-        if rangetool:           
+        if rangetool:
 
             p_rangetool.line(
                 "__x__values",
@@ -1816,7 +1826,7 @@ class FramePlotMethods(BasePlotMethods):
 
         Returns
         -------
-        
+
         Bokeh.plotting.figure or Bokeh.layouts.row
 
         Examples
@@ -1867,7 +1877,7 @@ class FramePlotMethods(BasePlotMethods):
 
         Returns
         -------
-        
+
         Bokeh.plotting.figure or Bokeh.layouts.row
 
         Examples
@@ -1918,7 +1928,7 @@ class FramePlotMethods(BasePlotMethods):
 
         Returns
         -------
-        
+
         Bokeh.plotting.figure or Bokeh.layouts.row
 
         Examples
@@ -2292,9 +2302,9 @@ class FramePlotMethods(BasePlotMethods):
             The column name or column position to be used as vertical
             coordinates for each point.
 
-        category : str or object 
+        category : str or object
             A column name whose values will be used to color the
-            marker points according to a colormap. 
+            marker points according to a colormap.
 
         **kwds
             Keyword arguments to pass on to :meth:`pandas.DataFrame.plot_bokeh`.
@@ -2337,10 +2347,10 @@ class FramePlotMethods(BasePlotMethods):
 
     def map(self, x, y, **kwds):
         """
-        Create a plot of geographic points stored in a Pandas DataFrame on an 
+        Create a plot of geographic points stored in a Pandas DataFrame on an
         interactive map.
 
-        The coordinates (latitude/longitude) of each point are defined by two 
+        The coordinates (latitude/longitude) of each point are defined by two
         dataframe columns.
 
         Parameters
@@ -2355,28 +2365,28 @@ class FramePlotMethods(BasePlotMethods):
 
         hovertool_string : str
             If specified, this string will be used for the hovertool (@{column}
-            will be replaced by the value of the column for the element the 
+            will be replaced by the value of the column for the element the
             mouse hovers over, see also Bokeh documentation). This can be
             used to display additional information on the map.
 
         tile_provider : None or str (default: 'CARTODBPOSITRON_RETINA')
-            Define build-in tile provider for background maps. Possible 
-            values: None, 'CARTODBPOSITRON', 'CARTODBPOSITRON_RETINA', 
-            'STAMEN_TERRAIN', 'STAMEN_TERRAIN_RETINA', 'STAMEN_TONER', 
-            'STAMEN_TONER_BACKGROUND', 'STAMEN_TONER_LABELS'. 
-            
+            Define build-in tile provider for background maps. Possible
+            values: None, 'CARTODBPOSITRON', 'CARTODBPOSITRON_RETINA',
+            'STAMEN_TERRAIN', 'STAMEN_TERRAIN_RETINA', 'STAMEN_TONER',
+            'STAMEN_TONER_BACKGROUND', 'STAMEN_TONER_LABELS'.
+
         tile_provider_url : str
-            An arbitraty tile_provider_url of the form '/{Z}/{X}/{Y}*.png' 
+            An arbitraty tile_provider_url of the form '/{Z}/{X}/{Y}*.png'
             can be passed to be used as background map.
 
-        
-        tile_attribution : str 
+
+        tile_attribution : str
             String (also HTML accepted) for showing attribution
             for tile source in the lower right corner.
 
         tile_alpha : float (Default: 1)
-            Sets the alpha value of the background tile between [0, 1]. 
-        
+            Sets the alpha value of the background tile between [0, 1].
+
 
         **kwds
             Keyword arguments to pass on to :meth:`pandas.DataFrame.plot_bokeh`.
@@ -2393,7 +2403,7 @@ class FramePlotMethods(BasePlotMethods):
         Examples
         --------
         Let's see how to draw a scatter plot using coordinates from the values
-        in a DataFrame's columns. Below an example of plotting all cities 
+        in a DataFrame's columns. Below an example of plotting all cities
         for more than 1 million inhabitants:
 
         .. plot::
@@ -2409,7 +2419,7 @@ class FramePlotMethods(BasePlotMethods):
             ...     hovertool_string="<h2> @{name} </h2> \n\n \
             ...                       <h3> Population: @{pop_max} </h3>",
             ...     tile_provider='STAMEN_TERRAIN_RETINA',
-            ...     size="size", 
+            ...     size="size",
             ...     figsize=(900, 600),
             ...     title="World cities with more than 1.000.000 inhabitants")
 
@@ -2419,7 +2429,7 @@ class FramePlotMethods(BasePlotMethods):
 def _initialize_rangetool(p, x_axis_type, source):
     """
     Initializes the range tool chart and slider.
-    
+
     Parameters
     ----------
     p : Bokeh.plotting.figure

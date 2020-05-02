@@ -1,3 +1,15 @@
+from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from builtins import range
+from builtins import dict
+from builtins import int
+from builtins import zip
+from builtins import str
+from builtins import filter
+#from future import standard_library
+#standard_library.install_aliases()
 import numbers
 import sys
 
@@ -134,7 +146,8 @@ def convert_geoDataFrame_to_patches(gdf, geometry_column_name="geometry"):
         row["__y__"] = [[[int(_) for _ in y]]]
 
         for interior in geometry.interiors:
-            x, y, *z = zip(*interior.coords)
+            _3to2list = list(zip(*interior.coords))
+            x, y, z, = _3to2list[:2] + [_3to2list[2:]]
             row["__x__"][0].append([int(_) for _ in x])
             row["__y__"][0].append([int(_) for _ in y])
 
